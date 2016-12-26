@@ -18,6 +18,13 @@ public class Company {
 		this.tel = tel;
 	}
 
+	public Company(String coName, String address, String tel) {
+		super();
+		this.coName = coName;
+		this.address = address;
+		this.tel = tel;
+	}
+
 	public Company() {
 		super();
 		// TODO Auto-generated constructor stub
