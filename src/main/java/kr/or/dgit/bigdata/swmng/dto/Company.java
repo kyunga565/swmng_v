@@ -6,10 +6,19 @@ public class Company {
 	private String address;
 	private String tel;
 
+	public Company(String coName) {
+		super();
+		this.coName = coName;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return String.format("Company [no=%s, coName=%s, address=%s, tel=%s]", no, coName, address, tel);
 	}
+
+
 
 	public Company(int no, String coName, String address, String tel) {
 		this.no = no;

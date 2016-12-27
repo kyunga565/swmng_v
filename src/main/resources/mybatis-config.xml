@@ -1,26 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
 <!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<properties resource="application.properties" />
 	<typeAliases>
-		<typeAlias type="kr.or.dgit.bigdata.swmng.dto.Buyer" alias="Buyer" />
-		<typeAlias type="kr.or.dgit.bigdata.swmng.dto.Company"
-			alias="Company" />
-		<typeAlias type="kr.or.dgit.bigdata.swmng.dto.Sale" alias="Sale" />
-		<typeAlias type="kr.or.dgit.bigdata.swmng.dto.Software"
-			alias="Software" />
+		<typeAlias type="kr.or.dgit.bigdata.swmng.util.CoNameTypeHandler"
+			alias="TypeHandler" />
+		<package name="kr.or.dgit.bigdata.swmng.dto" />
 	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler handler="TypeHandler" />
+
+		<package name="kr.or.dgit.bigdata.swmng.dto" />
+		<package name="kr.or.dgit.bigdata.swmng.util" />
+	</typeHandlers>
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/swmng" />
-				<property name="username" value="user_mng" />
-				<property name="password" value="rootroot" />
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
 			</dataSource>
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="kr/or/dgit/bigdata/swmng/mapper/swmngMapper.xml" />
+		<mapper resource="kr/or/dgit/bigdata/swmng/mapper/CompanyMapper.xml" />
+		<mapper resource="kr/or/dgit/bigdata/swmng/mapper/SoftwareMapper.xml" />
 	</mappers>
 </configuration>

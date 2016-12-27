@@ -6,18 +6,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
 import kr.or.dgit.bigdata.swmng.dao.CompanyDao;
-import kr.or.dgit.bigdata.swmng.dto.Company;
+import kr.or.dgit.bigdata.swmng.dao.SoftwareDao;
+import kr.or.dgit.bigdata.swmng.dto.Software;
 import kr.or.dgit.bigdata.swmng.util.MybatisSessionFactory;
 
-public class CompanyService implements CompanyDao<Company> {
+public class SoftwareService implements SoftwareDao<Software> {
 	/**
-	* Logger for this class
-	*/
-	private static final Logger logger = Logger.getLogger(CompanyService.class);
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(SoftwareService.class);
 
-	private static final CompanyService instance = new CompanyService();
+	private static final SoftwareService instance = new SoftwareService();
 
-	public static CompanyService getInstance() {
+	public static SoftwareService getInstance() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getInstance() - start");
 		}
@@ -28,21 +29,19 @@ public class CompanyService implements CompanyDao<Company> {
 		return instance;
 	}
 
-	private CompanyService() {
+	private SoftwareService() {
 	}
 
-	
-
 	@Override
-	public void insertItem(Company item) {
+	public void insertItem(Software item) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("insertItem(Company) - start");
 		}
-		
+
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao<Company> companyDao = sqlSession.getMapper(CompanyDao.class);
+		SoftwareDao<Software> softwareDao = sqlSession.getMapper(SoftwareDao.class);
 		try {
-			companyDao.insertItem(item);
+			softwareDao.insertItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -58,11 +57,11 @@ public class CompanyService implements CompanyDao<Company> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("deleteItem(int) - start");
 		}
-		
+
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		SoftwareDao softwareDao = sqlSession.getMapper(SoftwareDao.class);
 		try {
-			companyDao.deleteItem(idx);
+			softwareDao.deleteItem(idx);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -74,15 +73,15 @@ public class CompanyService implements CompanyDao<Company> {
 	}
 
 	@Override
-	public void updateItem(Company item) {
+	public void updateItem(Software item) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("updateItem(Company) - start");
 		}
-		
+
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		SoftwareDao softwareDao = sqlSession.getMapper(SoftwareDao.class);
 		try {
-			companyDao.updateItem(item);
+			softwareDao.updateItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -94,15 +93,15 @@ public class CompanyService implements CompanyDao<Company> {
 	}
 
 	@Override
-	public Company selectByNo(int idx) {
+	public Software selectByNo(int idx) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("selectByNo(int) - start");
 		}
-		
+
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		SoftwareDao softwareDao = sqlSession.getMapper(SoftwareDao.class);
 		try {
-			Company returnCompany = (Company) companyDao.selectByNo(idx);
+			Software returnCompany = (Software) softwareDao.selectByNo(idx);
 			if (logger.isDebugEnabled()) {
 				logger.debug("selectByNo(int) - end");
 			}
@@ -113,15 +112,15 @@ public class CompanyService implements CompanyDao<Company> {
 	}
 
 	@Override
-	public List<Company> selectAll() {
+	public List<Software> selectAll() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("selectAll() - start");
 		}
-	
+
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		SoftwareDao softwareDao = sqlSession.getMapper(SoftwareDao.class);
 		try {
-			List<Company> returnList = companyDao.selectAll();
+			List<Software> returnList = softwareDao.selectAll();
 			if (logger.isDebugEnabled()) {
 				logger.debug("selectAll() - end");
 			}

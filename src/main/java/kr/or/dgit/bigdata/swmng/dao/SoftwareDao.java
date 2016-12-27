@@ -2,7 +2,7 @@ package kr.or.dgit.bigdata.swmng.dao;
 
 import java.util.List;
 
-public interface SwMngDao<T> {
+public interface SoftwareDao<T> {
 	void insertItem(T item);
 
 	void deleteItem(int idx);

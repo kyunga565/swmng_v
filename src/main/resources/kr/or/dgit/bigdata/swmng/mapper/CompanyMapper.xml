@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DAO인터페이스 연결 -->
+<mapper namespace="kr.or.dgit.bigdata.swmng.dao.CompanyDao">
+
+
+	<!-- 쿼리문을 연결할 변수(ID)생성후 DTO(ID)와 연결 -->
+	<select id="selectAll" resultType="Company">
+		SELECT no,coName,address,tel
+		FROM company
+	</select>
+	<select id="selectByNo" parameterType="int" resultType="Company">
+		SELECT
+		no,coName,address,tel
+		FROM company WHERE no = #{no}
+	</select>
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM company
+		WHERE
+		no =
+		#{no}
+	</delete>
+	<insert id="insertItem" parameterType="Company">
+		INSERT INTO company
+		VALUES(#{coName},#{address},#{tel})
+	</insert>
+	<update id="updateItem" parameterType="Company">
+		UPDATE company SET
+		coName=#{coName}, address= #{address}, tel= #{tel} WHERE no = #{no}
+	</update>
+
+</mapper>
