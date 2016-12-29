@@ -1,189 +1,153 @@
--- 학사관리
-DROP SCHEMA IF EXISTS mybatis_dev;
+-- SW매니저 초기화 부분
+DROP SCHEMA IF EXISTS swMng;
 
--- 학사관리
-CREATE SCHEMA mybatis_dev;
-use mybatis_dev;
+-- SW매니저
+CREATE SCHEMA swMng;
 
--- 주소
-CREATE TABLE addresses (
-	addr_id INTEGER     NOT NULL COMMENT '번호', -- 번호
-	street  varchar(50) NOT NULL COMMENT '거리', -- 거리
-	city    varchar(50) NOT NULL COMMENT '시도', -- 시도
-	state   varchar(50) NOT NULL COMMENT '시군구', -- 시군구
-	zip     char(5)     NULL     COMMENT '우편번호', -- 우편번호
-	country varchar(20) NULL     COMMENT '동' -- 동
+-- 유저 삭제 ,생성 및 권한부여 --
+grant select, insert, update, delete on swmng.* to 'user_mng' identified by 'rootroot';
+
+-- DB 선택 --
+use swMng;
+
+-- 공급회사
+CREATE TABLE company (
+	no      int(11)     unique NULL     auto_increment COMMENT '회사번호', -- 회사번호
+	coName  varchar(20) NOT NULL COMMENT '회사명', -- 회사명
+	address varchar(50) NULL     COMMENT '주소', -- 주소
+	tel varchar(20)     NULL     COMMENT '전화번호' -- 전화번호
 )
-COMMENT '주소';
+COMMENT '공급회사';
 
--- 주소
-ALTER TABLE addresses
-	ADD CONSTRAINT PK_addresses -- 주소 기본키
+-- 공급회사
+ALTER TABLE company
+	ADD CONSTRAINT PK_company -- 공급회사 기본키
 		PRIMARY KEY (
-			addr_id -- 번호
+			coName -- 회사명
 		);
 
-ALTER TABLE addresses
-	MODIFY COLUMN addr_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '번호';
-
--- 학생
-CREATE TABLE students (
-	stud_id INTEGER     NOT NULL COMMENT '학번', -- 학번
-	name    varchar(50) NOT NULL COMMENT '성명', -- 성명
-	email   varchar(50) NOT NULL COMMENT '이메일', -- 이메일
-	phone   varchar(15) NULL     COMMENT '연락처', -- 연락처
-	dob     DATE        NULL     COMMENT '생년월일', -- 생년월일
-	bio     LONGTEXT    NULL     COMMENT '자기소개서', -- 자기소개서
-	pic     BLOB        NULL     COMMENT '증명사진', -- 증명사진
-	addr_id INTEGER     NULL     COMMENT '주소' -- 주소
+-- 소프트웨어
+CREATE TABLE software (
+	no        int(11)     unique NULL     auto_increment COMMENT '품목번호', -- 품목번호
+	category  varchar(5)  NULL     COMMENT '분류', -- 분류
+	title     varchar(20) NOT NULL COMMENT '품목명', -- 품목명
+	supPrice  int(11)     NULL     COMMENT '공급가격', -- 공급가격
+	sellPrice int(11)     NULL     COMMENT '판매가격', -- 판매가격
+	coName    varchar(20) NULL     COMMENT '공급회사' -- 공급회사
 )
-COMMENT '학생';
+COMMENT '소프트웨어';
 
--- 학생
-ALTER TABLE students
-	ADD CONSTRAINT PK_students -- 학생 기본키
+-- 소프트웨어
+ALTER TABLE software
+	ADD CONSTRAINT PK_software -- 소프트웨어 기본키
 		PRIMARY KEY (
-			stud_id -- 학번
+			title -- 품목명
 		);
 
--- 강사
-CREATE TABLE tutors (
-	tutor_id INTEGER     NOT NULL COMMENT '강사번호', -- 강사번호
-	name     varchar(50) NOT NULL COMMENT '성명', -- 성명
-	email    varchar(50) NOT NULL COMMENT '이메일', -- 이메일
-	phone    varchar(15) NULL     COMMENT '연락처', -- 연락처
-	dob      DATE        NULL     COMMENT '생년월일', -- 생년월일
-	bio      LONGTEXT    NULL     COMMENT '자기소개서', -- 자기소개서
-	pic      BLOB        NULL     COMMENT '증명사진', -- 증명사진
-	addr_id  INTEGER     NULL     COMMENT '주소' -- 주소
+-- 고객현황
+CREATE TABLE buyer (
+	no       int(11)     unique NULL     auto_increment COMMENT '고객번호', -- 고객번호
+	shopName varchar(20) NOT NULL COMMENT '상호명', -- 상호명
+	address  varchar(50) NULL     COMMENT '주소', -- 주소
+	tel      varchar(20)     NULL     COMMENT '전화번호' -- 전화번호
 )
-COMMENT '강사';
+COMMENT '고객현황';
 
--- 강사
-ALTER TABLE tutors
-	ADD CONSTRAINT PK_tutors -- 강사 기본키
+-- 고객현황
+ALTER TABLE buyer
+	ADD CONSTRAINT PK_buyer -- 고객현황 기본키
 		PRIMARY KEY (
-			tutor_id -- 강사번호
+			shopName -- 상호명
 		);
 
-ALTER TABLE tutors
-	MODIFY COLUMN tutor_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '강사번호';
-
--- 강좌
-CREATE TABLE courses (
-	course_id   INTEGER      NOT NULL COMMENT '강좌번호', -- 강좌번호
-	name        varchar(50)  NOT NULL COMMENT '강좌명', -- 강좌명
-	description varchar(512) NULL     COMMENT '강좌내용', -- 강좌내용
-	start_date  DATE         NULL     COMMENT '시작일', -- 시작일
-	end_date    DATE         NULL     COMMENT '종료일', -- 종료일
-	tutor_id    INTEGER      NULL     COMMENT '담당강사' -- 담당강사
+-- 판매현황
+CREATE TABLE sale (
+	no         int(11)     unique NULL auto_increment COMMENT '주문번호', -- 주문번호
+	shopName   varchar(20) NULL COMMENT '상호명', -- 상호명
+	title      varchar(20) NULL COMMENT '품목명', -- 품목명
+	orderCount int(11)     NULL COMMENT '주문수량', -- 주문수량
+	payment    BOOLEAN     NULL COMMENT '입금여부', -- 미수금여부 (true:미납 , false:완납)
+	date       DATE        NULL COMMENT '주문일자' -- 주문일자
 )
-COMMENT '강좌';
+COMMENT '판매현황';
 
--- 강좌
-ALTER TABLE courses
-	ADD CONSTRAINT PK_courses -- 강좌 기본키
-		PRIMARY KEY (
-			course_id -- 강좌번호
-		);
-
-ALTER TABLE courses
-	MODIFY COLUMN course_id INTEGER NOT NULL AUTO_INCREMENT COMMENT '강좌번호';
-
--- 수강
-CREATE TABLE course_enrollment (
-	course_id INTEGER NOT NULL COMMENT '강좌', -- 강좌
-	stud_id   INTEGER NOT NULL COMMENT '학생' -- 학생
-)
-COMMENT '수강';
-
--- 수강
-ALTER TABLE course_enrollment
-	ADD CONSTRAINT PK_course_enrollment -- 수강 기본키
-		PRIMARY KEY (
-			course_id, -- 강좌
-			stud_id    -- 학생
-		);
-
--- 학생
-ALTER TABLE students
-	ADD CONSTRAINT FK_addresses_TO_students -- 주소 -> 학생
+-- 소프트웨어
+ALTER TABLE software
+	ADD CONSTRAINT FK_company_TO_software -- 공급회사 -> 소프트웨어
 		FOREIGN KEY (
-			addr_id -- 주소
+			coName -- 공급회사
 		)
-		REFERENCES addresses ( -- 주소
-			addr_id -- 번호
-		);
+		REFERENCES company ( -- 공급회사
+			coName -- 회사명
+		) on delete cascade;
 
--- 강사
-ALTER TABLE tutors
-	ADD CONSTRAINT FK_addresses_TO_tutors -- 주소 -> 강사
+-- 판매현황
+ALTER TABLE sale
+	ADD CONSTRAINT FK_buyer_TO_sale -- 고객현황 -> 판매현황
 		FOREIGN KEY (
-			addr_id -- 주소
+			shopName -- 상호명
 		)
-		REFERENCES addresses ( -- 주소
-			addr_id -- 번호
-		);
+		REFERENCES buyer ( -- 고객현황
+			shopName -- 상호명
+		)on delete cascade;
 
--- 강좌
-ALTER TABLE courses
-	ADD CONSTRAINT FK_tutors_TO_courses -- 강사 -> 강좌
+-- 판매현황
+ALTER TABLE sale
+	ADD CONSTRAINT FK_software_TO_sale -- 소프트웨어 -> 판매현황
 		FOREIGN KEY (
-			tutor_id -- 담당강사
+			title -- 품목명
 		)
-		REFERENCES tutors ( -- 강사
-			tutor_id -- 강사번호
-		);
-
--- 수강
-ALTER TABLE course_enrollment
-	ADD CONSTRAINT FK_courses_TO_course_enrollment -- 강좌 -> 수강
-		FOREIGN KEY (
-			course_id -- 강좌
-		)
-		REFERENCES courses ( -- 강좌
-			course_id -- 강좌번호
-		);
-
--- 수강
-ALTER TABLE course_enrollment
-	ADD CONSTRAINT FK_students_TO_course_enrollment -- 학생 -> 수강
-		FOREIGN KEY (
-			stud_id -- 학생
-		)
-		REFERENCES students ( -- 학생
-			stud_id -- 학번
-		);
+		REFERENCES software ( -- 소프트웨어
+			title -- 품목명
+		)on delete cascade;
 		
-INSERT INTO ADDRESSES (ADDR_ID,STREET,CITY,STATE,ZIP,COUNTRY) VALUES 
- (1,'4891 Pacific Hwy','San Diego','CA','92110','San Diego'),
- (2,'2400 N Jefferson St','Perry','FL','32347','Taylor'),
- (3,'710 N Cable Rd','Lima','OH','45825','Allen'),
- (4,'5108 W Gore Blvd','Lawton','OK','32365','Comanche');
+-- 공급회사 데이터 --
+insert into company(coname,address,tel) values
+('알럽소프트','경기도 부천시 계산동','02-930-4551'),
+('인디넷','경기도 수원시 제포동','032-579-4512'),
+('참빛소프트','경기도 파주군 은빛아파트','032-501-4503'),
+('소프트마켓','서울특별시 광진구 자양동','02-802-4564'),
+('크라이스','경기도 고양시 대자동 서영아파트','032-659-3215'),
+('프로그램캠프','경기도 부천시 오정구','032-659-3215');
 
-INSERT INTO STUDENTS (STUD_ID,NAME,EMAIL,PHONE,DOB,BIO,PIC,ADDR_ID) VALUES 
- (1,'Timothy','timothy@gmail.com','123-123-1234','1988-04-25',NULL,NULL,3),
- (2,'Douglas','douglas@gmail.com','789-456-1234','1990-08-15',NULL,NULL,4);
+-- 소프트웨어 데이터 --
+insert into software(category,title,supprice,sellprice,coname) values
+('게임','바람의제국',25000,40000,'알럽소프트'),
+('사무','국제무역',30000,48000,'인디넷'),
+('게임','FIFA2015',27000 ,40500 ,'참빛소프트'),
+('게임','삼국지',32000 ,48000 ,'소프트마켓'),
+('게임','아마겟돈',35000 ,50750 ,'크라이스'),
+('사무','한컴오피스',1370000 ,1918000 ,'프로그램캠프'),
+('그래픽','포토샵',980000 ,1519000 ,'참빛소프트'),
+('그래픽','오토캐드2015',2340000 ,3978000 ,'소프트마켓'),
+('그래픽','인디자인',1380000 ,2180400 ,'알럽소프트'),
+('사무','Windows10',2470000 ,3334500 ,'인디넷');
 
-INSERT INTO TUTORS (TUTOR_ID,NAME,EMAIL,PHONE,DOB,BIO,PIC,ADDR_ID) VALUES 
- (1,'John','john@gmail.com','111-222-3333','1980-05-20',NULL,NULL,1),
- (2,'Ken','ken@gmail.com','111-222-3333','1980-05-20',NULL,NULL,1),
- (3,'Paul','paul@gmail.com','123-321-4444','1981-03-15',NULL,NULL,2),
- (4,'Mike','mike@gmail.com','123-321-4444','1981-03-15',NULL,NULL,2);
+-- 고객현황 데이터 --
+insert into buyer(shopname,address,tel) values
+('재밌는게임방','서울시 동대문구 연희동','02-111-1111'),
+('좋은게임방','서울시 관악구 봉천동','02-222-2222'),
+('친구게임방','천안시 동남구 신부동','041-333-3333'),
+('충청남도교육청','대전광역시 중구 과례2길','042-444-4444'),
+('대전광역시교육청','대전광역시 서구 향촌길','042-555-5555'),
+('아산시스템','충청남도 아산시 배방면','041-777-7777');
 
-INSERT INTO COURSES (COURSE_ID,NAME,DESCRIPTION,START_DATE,END_DATE,TUTOR_ID) VALUES 
- (1,'Quickstart Core Java','Core Java Programming','2013-03-01','2013-04-15',1),
- (2,'Quickstart JavaEE6','Enterprise App Development using JavaEE6','2013-04-01','2013-08-30',1),
- (3,'MyBatis3 Premier','MyBatis 3 framework','2013-06-01','2013-07-15',2);
+-- 판매현황 데이터 --
+insert into sale(shopname,title,ordercount,payment,date) values
+('재밌는게임방','바람의제국',25,false,'2009-12-13'),
+('친구게임방','아마겟돈',25,false,'2010-09-13'),
+('좋은게임방','삼국지',20,false,'2010-09-11'),
+('재밌는게임방','삼국지',25,false,'2010-10-02'),
+('충청남도교육청','인디자인',250,true,'2010-10-02'),
+('아산시스템','인디자인',2,true,'2010-10-02'),
+('친구게임방','바람의제국',20,false,'2010-10-04'),
+('대전광역시교육청','포토샵',20,false,'2010-10-04'),
+('아산시스템','포토샵',2,false,'2010-10-04'),
+('충청남도교육청','한컴오피스',320,false,'2010-10-04');
 
-INSERT INTO COURSE_ENROLLMENT (COURSE_ID,STUD_ID) VALUES 
- (1,1),
- (1,2),
- (2,2);
- 
- select * from students;
- select * from tutors;
- select * from addresses;
- select * from courses;
- select * from course_enrollment;
- 
+select * from sale;
+select * from software;
+select * from buyer;
+select * from company;
+
+insert into buyer(shopname,address,tel) values('----','서울시 동대문구 연희동','02-111-1111');

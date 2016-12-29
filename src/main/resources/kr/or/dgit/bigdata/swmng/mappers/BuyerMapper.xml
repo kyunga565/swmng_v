@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DAO인터페이스 연결 -->
+<mapper namespace="kr.or.dgit.bigdata.swmng.mappers.BuyerMapper">
+	<select id="insertItem" parameterType="Buyer">
+		insert into buyer(shopname,address,tel) values(#{shopname},#{address},#{tel})
+	</select>
+
+
+</mapper>
