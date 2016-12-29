@@ -1,8 +1,8 @@
-package kr.or.dgit.bigdata.swmng.dao;
+package kr.or.dgit.bigdata.swmng.mappers;
 
 import java.util.List;
 
-public interface CompanyDao<T> {
+public interface SoftwareMapper<T> {
 	void insertItem(T item);
 
 	void deleteItem(int idx);

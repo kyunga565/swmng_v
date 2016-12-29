@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
-import kr.or.dgit.bigdata.swmng.dao.CompanyDao;
 import kr.or.dgit.bigdata.swmng.dto.Company;
+import kr.or.dgit.bigdata.swmng.mappers.CompanyMapper;
 import kr.or.dgit.bigdata.swmng.util.MybatisSessionFactory;
 
-public class CompanyService implements CompanyDao<Company> {
+public class CompanyService implements CompanyMapper<Company> {
 	/**
 	* Logger for this class
 	*/
@@ -40,7 +40,7 @@ public class CompanyService implements CompanyDao<Company> {
 		}
 		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao<Company> companyDao = sqlSession.getMapper(CompanyDao.class);
+		CompanyMapper<Company> companyDao = sqlSession.getMapper(CompanyMapper.class);
 		try {
 			companyDao.insertItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
@@ -60,7 +60,7 @@ public class CompanyService implements CompanyDao<Company> {
 		}
 		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		CompanyMapper companyDao = sqlSession.getMapper(CompanyMapper.class);
 		try {
 			companyDao.deleteItem(idx);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
@@ -80,7 +80,7 @@ public class CompanyService implements CompanyDao<Company> {
 		}
 		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		CompanyMapper companyDao = sqlSession.getMapper(CompanyMapper.class);
 		try {
 			companyDao.updateItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
@@ -100,7 +100,7 @@ public class CompanyService implements CompanyDao<Company> {
 		}
 		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		CompanyMapper companyDao = sqlSession.getMapper(CompanyMapper.class);
 		try {
 			Company returnCompany = (Company) companyDao.selectByNo(idx);
 			if (logger.isDebugEnabled()) {
@@ -119,7 +119,7 @@ public class CompanyService implements CompanyDao<Company> {
 		}
 	
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		CompanyDao companyDao = sqlSession.getMapper(CompanyDao.class);
+		CompanyMapper companyDao = sqlSession.getMapper(CompanyMapper.class);
 		try {
 			List<Company> returnList = companyDao.selectAll();
 			if (logger.isDebugEnabled()) {

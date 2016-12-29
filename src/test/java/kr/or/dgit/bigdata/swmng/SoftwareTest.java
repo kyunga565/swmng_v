@@ -23,15 +23,13 @@ public class SoftwareTest {
 		ss = null;
 	}
 
-/*	@Test
+	@Test
 	public void test1() {
 		List<Software> list = ss.selectAll();
 		Assert.assertNotNull(list);
-		for (Software c : list) {
-			System.out.println(c);
-		}
-	}*/
-
+	
+	}
+	/*
 	@Test
 	public void test2() {
 		Software s = ss.selectByNo(3);
@@ -39,7 +37,7 @@ public class SoftwareTest {
 		System.out.println(s);
 	}
 
-	/*@Test
+	@Test
 	public void test3() {
 		cs.deleteItem(2);
 		Assert.assertNull(cs.selectByNo(2));

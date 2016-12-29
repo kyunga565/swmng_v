@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DAO인터페이스 연결 -->
+<mapper namespace="kr.or.dgit.bigdata.swmng.mappers.SoftwareMapper">
+	<resultMap type="Software" id="softwareResult">
+		<id property="no" column="no" />
+		<result property="category" column="category" />
+		<result property="title" column="title" />
+		<result property="supPrice" column="supPrice" />
+		<result property="sellPrice" column="sellPrice" />
+		<association property="coName" column="coName" javaType="Company"></association>
+	</resultMap>
+
+	<!-- 쿼리문을 연결할 변수(ID)생성후 DTO(ID)와 연결 -->
+	<select id="selectAll" resultType="Software" resultMap="softwareResult">
+		SELECT s.*, c.* FROM software s, company c 
+		WHERE s.coname=c.coname ORDER BY s.no
+	</select>
+
+	<!-- <select id="selectByNo" parameterType="int" resultType="Software"> 
+		SELECT no,category,title,supPrice,sellPrice,coName FROM software WHERE no 
+		= #{no} </select> <delete id="deleteItem" parameterType="int"> DELETE FROM 
+		software WHERE no = #{no} </delete> <select id="insertItem" resultType="Software" 
+		parameterType="Software"> INSERT INTO software VALUES(#{no},#{category},#{title},#{supPrice},#{sellPrice},#{coName}) 
+		</select> <update id="updateItem" parameterType="int"> UPDATE software SET 
+		category=#{category}, title= #{title}, supPrice= #{supPrice}, sellPrice= 
+		#{sellPrice}, coName= #{coName} WHERE no = #{no} </update> -->
+</mapper>

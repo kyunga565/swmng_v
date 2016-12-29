@@ -5,20 +5,19 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
-import kr.or.dgit.bigdata.swmng.dto.Software;
-import kr.or.dgit.bigdata.swmng.mappers.CompanyMapper;
-import kr.or.dgit.bigdata.swmng.mappers.SoftwareMapper;
+import kr.or.dgit.bigdata.swmng.dto.Buyer;
+import kr.or.dgit.bigdata.swmng.mappers.BuyerMapper;
 import kr.or.dgit.bigdata.swmng.util.MybatisSessionFactory;
 
-public class SoftwareService implements SoftwareMapper<Software> {
+public class BuyerService implements BuyerMapper<Buyer> {
 	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger.getLogger(SoftwareService.class);
+	* Logger for this class
+	*/
+	private static final Logger logger = Logger.getLogger(BuyerService.class);
 
-	private static final SoftwareService instance = new SoftwareService();
+	private static final BuyerService instance = new BuyerService();
 
-	public static SoftwareService getInstance() {
+	public static BuyerService getInstance() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getInstance() - start");
 		}
@@ -29,19 +28,21 @@ public class SoftwareService implements SoftwareMapper<Software> {
 		return instance;
 	}
 
-	private SoftwareService() {
+	private BuyerService() {
 	}
 
+	
+
 	@Override
-	public void insertItem(Software item) {
+	public void insertItem(Buyer item) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("insertItem(Company) - start");
 		}
-
+		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		SoftwareMapper<Software> softwareDao = sqlSession.getMapper(SoftwareMapper.class);
+		BuyerMapper<Buyer> buyerDao = sqlSession.getMapper(BuyerMapper.class);
 		try {
-			softwareDao.insertItem(item);
+			buyerDao.insertItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -57,11 +58,11 @@ public class SoftwareService implements SoftwareMapper<Software> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("deleteItem(int) - start");
 		}
-
+		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		SoftwareMapper softwareDao = sqlSession.getMapper(SoftwareMapper.class);
+		BuyerMapper buyerDao = sqlSession.getMapper(BuyerMapper.class);
 		try {
-			softwareDao.deleteItem(idx);
+			buyerDao.deleteItem(idx);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -73,15 +74,15 @@ public class SoftwareService implements SoftwareMapper<Software> {
 	}
 
 	@Override
-	public void updateItem(Software item) {
+	public void updateItem(Buyer item) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("updateItem(Company) - start");
 		}
-
+		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		SoftwareMapper softwareDao = sqlSession.getMapper(SoftwareMapper.class);
+		BuyerMapper buyerDao = sqlSession.getMapper(BuyerMapper.class);
 		try {
-			softwareDao.updateItem(item);
+			buyerDao.updateItem(item);
 			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
 		} finally {
 			sqlSession.close();
@@ -93,34 +94,34 @@ public class SoftwareService implements SoftwareMapper<Software> {
 	}
 
 	@Override
-	public Software selectByNo(int idx) {
+	public Buyer selectByNo(int idx) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("selectByNo(int) - start");
 		}
-
+		
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		SoftwareMapper softwareDao = sqlSession.getMapper(SoftwareMapper.class);
+		BuyerMapper buyerDao = sqlSession.getMapper(BuyerMapper.class);
 		try {
-			Software returnCompany = (Software) softwareDao.selectByNo(idx);
+			Buyer returnBuyer = (Buyer) buyerDao.selectByNo(idx);
 			if (logger.isDebugEnabled()) {
 				logger.debug("selectByNo(int) - end");
 			}
-			return returnCompany;
+			return returnBuyer;
 		} finally {
 			sqlSession.close();
 		}
 	}
 
 	@Override
-	public List<Software> selectAll() {
+	public List<Buyer> selectAll() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("selectAll() - start");
 		}
-
+	
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
-		SoftwareMapper softwareDao = sqlSession.getMapper(SoftwareMapper.class);
+		BuyerMapper buyerDao = sqlSession.getMapper(BuyerMapper.class);
 		try {
-			List<Software> returnList = softwareDao.selectAll();
+			List<Buyer> returnList = buyerDao.selectAll();
 			if (logger.isDebugEnabled()) {
 				logger.debug("selectAll() - end");
 			}

@@ -10,7 +10,7 @@ public class Software {
 	
 	@Override
 	public String toString() {
-		return String.format("Software [no=%s, category=%s, title=%s, supPrice=%s, sellPrice=%s, coName=%s]", no,
+		return String.format("공급회사 [순번:%s, 분류:%s, 프로그램:%s, 공급가:%s, 판매가:%s, 공급회사:%s]", no,
 				category, title, supPrice, sellPrice, coName);
 	}
 	public Software() {

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- DAO인터페이스 연결 -->
-<mapper namespace="kr.or.dgit.bigdata.swmng.dao.CompanyDao">
+<mapper namespace="kr.or.dgit.bigdata.swmng.mappers.CompanyMapper">
 
 
 	<!-- 쿼리문을 연결할 변수(ID)생성후 DTO(ID)와 연결 -->
 	<select id="selectAll" resultType="Company">
 		SELECT no,coName,address,tel
-		FROM company
+		FROM company order by no;
 	</select>
 	<select id="selectByNo" parameterType="int" resultType="Company">
 		SELECT

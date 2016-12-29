@@ -20,19 +20,19 @@ public class CoNameTypeHandler extends BaseTypeHandler<Company> {
 
 	@Override
 	public Company getNullableResult(ResultSet rs, String columnName) throws SQLException {
-		// TODO Auto-generated method stub
-		return new Company(rs.getString(columnName));
+		return new Company(rs.getInt("no"), rs.getString("coName"), rs.getString("address"), rs.getString("tel"));
+		/*return new Company(rs.getString("coName"));*/
 	}
 
 	@Override
 	public Company getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
+
 		return new Company(rs.getString(columnIndex));
 	}
 
 	@Override
 	public Company getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
+
 		return new Company(cs.getString(columnIndex));
 	}
 
