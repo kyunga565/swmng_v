@@ -2,24 +2,22 @@ package kr.or.dgit.bigdata.swmng.main;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import kr.or.dgit.bigdata.swmng.customersubmenu.AddBuyerPanel;
 import kr.or.dgit.bigdata.swmng.customersubmenu.AddCompanyPanel;
 import kr.or.dgit.bigdata.swmng.customersubmenu.AddSoftwarePanel;
 import kr.or.dgit.bigdata.swmng.customersubmenu.BtnPanel;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class SwMngMain extends JFrame implements ActionListener {
 
@@ -65,7 +63,7 @@ public class SwMngMain extends JFrame implements ActionListener {
 		mnCustomer.add(listCustomer);
 		listCompany.addActionListener(this);
 		listSoftware.addActionListener(this);
-		listCustomer.addActionListener(this);
+	
 
 		// 주문관리 메뉴
 		JMenu mnOrder = new JMenu("주문관리");
@@ -104,10 +102,7 @@ public class SwMngMain extends JFrame implements ActionListener {
 			contentPane.add(new BtnPanel(), BorderLayout.SOUTH);
 
 		}
-		if (e.getSource() == listCustomer) {
-			contentPane.add(new AddBuyerPanel(), BorderLayout.CENTER);
-			contentPane.add(new BtnPanel(), BorderLayout.SOUTH);
-		}
+
 
 		revalidate();
 		repaint();
