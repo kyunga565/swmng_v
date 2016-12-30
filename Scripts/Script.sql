@@ -153,5 +153,6 @@ select no,shopname,address,tel from buyer;
 select * from company;
 select * from buyer where no=11;
 delete from buyer where no = 25;
-insert into buyer(shopname,address,tel) values('?','서울시 동대문구 연희동','02-111-1111');
+insert into buyer(shopname,address,tel) values('???','서울시 동대문구 연희동','02-111-1111');
 select shopname,address,tel from buyer where no=1;
+update buyer set no=8,shopname='박경아',address='eorn',tel='111-1111-1111' where no = 24;

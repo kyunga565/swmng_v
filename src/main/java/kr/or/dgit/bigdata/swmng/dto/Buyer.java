@@ -26,10 +26,10 @@ public class Buyer {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getShopName() {
+	public String getshopName() {
 		return shopName;
 	}
-	public void setShopName(String shopName) {
+	public void setshopName(String shopName) {
 		this.shopName = shopName;
 	}
 	public String getAddress() {

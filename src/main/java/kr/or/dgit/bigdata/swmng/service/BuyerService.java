@@ -49,7 +49,22 @@ public class BuyerService implements BuyerMapper<Buyer> {
 
 	@Override
 	public void updateItem(Buyer item) {
-		// TODO Auto-generated method stub
+		if (logger.isDebugEnabled()) {
+			logger.debug("updateItem(Company) - start");
+		}
+
+		SqlSession sqlSession = MybatisSessionFactory.openSession();
+		BuyerMapper<Buyer> buyerDao = sqlSession.getMapper(BuyerMapper.class);
+		try {
+			buyerDao.updateItem(item);
+			sqlSession.commit(); // mybatis는 오토커밋이 안됨 수동커밋.
+		} finally {
+			sqlSession.close();
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("updateItem(Company) - end");
+		}
 		
 	}
 

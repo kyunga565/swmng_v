@@ -47,5 +47,10 @@ public class BuyerTest {
 
 		Assert.assertNotNull(b);*/
 	}
-
+	@Test
+	public void updatetest() {
+		Buyer update = new Buyer(1, "re22", "대구", "전화없음");
+		bs.updateItem(update);
+		Assert.assertEquals(bs.selectByNo(7), update);
+	}
 }
