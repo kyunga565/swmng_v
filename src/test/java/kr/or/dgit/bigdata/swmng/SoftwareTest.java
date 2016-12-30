@@ -29,14 +29,14 @@ public class SoftwareTest {
 		Assert.assertNotNull(list);
 	
 	}
-	/*
+	
 	@Test
 	public void test2() {
 		Software s = ss.selectByNo(3);
 		Assert.assertNotNull(s);
 		System.out.println(s);
 	}
-
+	/*
 	@Test
 	public void test3() {
 		cs.deleteItem(2);

@@ -147,7 +147,11 @@ insert into sale(shopname,title,ordercount,payment,date) values
 
 select * from sale;
 select * from software;
-select * from buyer;
-select * from company;
 
-insert into buyer(shopname,address,tel) values('----','서울시 동대문구 연희동','02-111-1111');
+select * from buyer;
+select no,shopname,address,tel from buyer;
+select * from company;
+select * from buyer where no=11;
+delete from buyer where no = 25;
+insert into buyer(shopname,address,tel) values('?','서울시 동대문구 연희동','02-111-1111');
+select shopname,address,tel from buyer where no=1;

@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 import kr.or.dgit.bigdata.swmng.dto.Buyer;
+import kr.or.dgit.bigdata.swmng.dto.Software;
 import kr.or.dgit.bigdata.swmng.mappers.BuyerMapper;
+import kr.or.dgit.bigdata.swmng.mappers.SoftwareMapper;
 import kr.or.dgit.bigdata.swmng.util.MybatisSessionFactory;
 
 public class BuyerService implements BuyerMapper<Buyer> {
@@ -18,13 +20,6 @@ public class BuyerService implements BuyerMapper<Buyer> {
 	private static final BuyerService instance = new BuyerService();
 	
 	public static BuyerService getInstance() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("getInstance() - start");
-		}
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("getInstance() - end");
-		}
 		return instance;
 	}
 	private BuyerService(){}
@@ -35,10 +30,12 @@ public class BuyerService implements BuyerMapper<Buyer> {
 			logger.debug("insertStudent(Student) - start");
 		}
 		SqlSession sqlSession = MybatisSessionFactory.openSession();
+		BuyerMapper<Buyer> buyermapper = sqlSession.getMapper(BuyerMapper.class);
 		try{
-			BuyerMapper studentMapper = sqlSession.getMapper(BuyerMapper.class);
+			
+			buyermapper.insertItem(item);
+	
 			sqlSession.commit();
-			return ;
 		}finally{
 			sqlSession.close();
 		}
@@ -58,14 +55,39 @@ public class BuyerService implements BuyerMapper<Buyer> {
 
 	@Override
 	public Buyer selectByNo(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		if (logger.isDebugEnabled()) {
+			logger.debug("selectByNo(int) - start");
+		}
+
+		SqlSession sqlSession = MybatisSessionFactory.openSession();
+		BuyerMapper<Buyer> buyerDao = sqlSession.getMapper(BuyerMapper.class);
+		try {
+			Buyer returnbuyer = buyerDao.selectByNo(idx);
+			if (logger.isDebugEnabled()) {
+				logger.debug("selectByNo(int) - end");
+			}
+			return returnbuyer;
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 	@Override
 	public List<Buyer> selectByAll() {
-		// TODO Auto-generated method stub
-		return null;
+		if (logger.isDebugEnabled()) {
+			logger.debug("selectAll() - start");
+		}
+
+		SqlSession sqlSession = MybatisSessionFactory.openSession();
+		BuyerMapper buyerDao = sqlSession.getMapper(BuyerMapper.class);
+		try {
+			List<Buyer> returnList = buyerDao.selectByAll();
+			if (logger.isDebugEnabled()) {
+				logger.debug("selectAll() - end");
+			}
+			return returnList;
+		} finally {
+			sqlSession.close();
+		}
 	}
-	
 }
